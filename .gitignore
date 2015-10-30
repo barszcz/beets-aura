@@ -1,3 +1,9 @@
+# Virtualfish .venv file
+.venv
+
+# Editor 
+.ropeproject
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
