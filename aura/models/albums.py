@@ -40,20 +40,27 @@ class Album(Resource):
 		'year': rf.Integer
     }
 
-    @marshal_with(fields)
-    def get(self, album_id):
-        album = g.lib.get_album(album_id)
+    @classmethod
+    def _conv_album(cls,album):
         album_info = dict(album)
         track_ids = [i['id'] for i in album.items()]
         album_info['track_ids'] = track_ids
         return album_info
 
+
+    @marshal_with(fields, envelope='albums')
+    def get(self, album_id):
+        album = g.lib.get_album(album_id)
+        return Album._conv_album(album)
+
 class AlbumList(Resource):
     '''Endpoint for the full list of Albums'''
+
     fields = {
         'albums': rf.List(rf.Nested(Album.fields))
     }
+
     @marshal_with(fields)
     def get(self):
-        return {'albums': g.lib.albums()}
+        return {'albums': map(Album._conv_album, g.lib.albums())}
 

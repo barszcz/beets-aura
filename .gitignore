@@ -1,8 +1,15 @@
+# Test (requires audio files..)
+test/rsrc
+
+# ipython/jupyter notebook
+*.ipynb
+
 # Virtualfish .venv file
 .venv
 
 # Editor 
 .ropeproject
+*.swp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,3 @@
+
+class AudioFormatNotAcceptable(Exception):
+    pass

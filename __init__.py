@@ -15,16 +15,17 @@
 """A Web interface to beets."""
 from beets.plugins import BeetsPlugin
 from beets import ui
-from .aura import make_aura
+from .aura import configure_aura
 
 # Utilities.
 # Plugin hook.
-class WebPlugin(BeetsPlugin):
+class BeetsHook(BeetsPlugin):
     def __init__(self):
         super(WebPlugin, self).__init__()
         self.config.add({
             'host': u'',
             'port': 8337,
+            'daemonize': False
         })
         self.app = 0
 
@@ -33,15 +34,27 @@ class WebPlugin(BeetsPlugin):
         cmd.parser.add_option('-d', '--debug', action='store_true',
                               default=False, help='debug mode')
 
+        # TODO: Implement daemonization, maybe?
+        # Would be good for simple usage, but bad for production.
+        #cmd.parser.add_option('-D', '--daemonize', action='store_true',
+        #                      default=False, help='daemonize server')
+
         def func(lib, opts, args):
             args = ui.decargs(args)
             if args:
                 self.config['host'] = args.pop(0)
             if args:
                 self.config['port'] = int(args.pop(0))
-            aura = make_aura(beetslib=lib)
+            aura = configure_aura('production')
             aura.run(host=self.config['host'].get(unicode),
                     port=self.config['port'].get(int),
                     debug=opts.debug, threaded=True)
         cmd.func = func
         return [cmd]
+
+class WSGIHook(object):
+    '''Class for WSGI implementations to hook into'''
+    def __init__(self):
+        raise NotImplemented("WSGIHook Constructor Not Implemented")
+
+
