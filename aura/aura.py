@@ -12,7 +12,7 @@ from .models import Artist, ArtistList
 from .util import ERRORS
 
 aura = Flask(__name__)
-api = Api(aura, prefix="/aura/v0.1", errors=ERRORS)
+api = Api(aura, prefix="/aura", errors=ERRORS)
 api.decorators = [cors.crossdomain(origin="*", methods=['GET','OPTIONS'])]
 
 api.add_resource(Aura, '/', '/server', '/aura')

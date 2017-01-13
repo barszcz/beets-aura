@@ -14,12 +14,13 @@
 
 """A Web interface to beets."""
 from beets.plugins import BeetsPlugin
+from beetsplug.web import WebPlugin
 from beets import ui
 from .aura import configure_aura
 
 # Utilities.
 # Plugin hook.
-class BeetsHook(BeetsPlugin):
+class BeetsHook(WebPlugin):
     def __init__(self):
         super(WebPlugin, self).__init__()
         self.config.add({
@@ -45,7 +46,7 @@ class BeetsHook(BeetsPlugin):
                 self.config['host'] = args.pop(0)
             if args:
                 self.config['port'] = int(args.pop(0))
-            aura = configure_aura('production')
+            aura = configure_aura()
             aura.run(host=self.config['host'].get(unicode),
                     port=self.config['port'].get(int),
                     debug=opts.debug, threaded=True)
