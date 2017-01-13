@@ -1,2 +1,4 @@
 # beets-aura
-AURA API implementation for Beets music library tool. Python/Flask API implemented as Beets plugin
+A [beets](http://beets.io) plugin providing an [AURA](https://github.com/beetbox/aura) API implementation.
+
+Shamelessly forked from [Gabriel Schubiner's original work.](http://git.gabeos.cc/gabeos/beets-aura)
